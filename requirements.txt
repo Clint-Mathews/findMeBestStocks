@@ -1,3 +1,5 @@
 requests==2.31.0
 beautifulsoup4
 gspread
+python-dotenv
+google-auth
