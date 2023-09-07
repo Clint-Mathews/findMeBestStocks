@@ -30,23 +30,34 @@ jobs:
             - name: Save ZIP file to repository folder
               run: mv build/find_trending_stocks_to_buy.zip ./terraform/
     
-              # deploy_lambda:
-    #     runs-on: ubuntu-latest
+    deploy_lambda:
+        runs-on: ubuntu-latest
     
-    #     steps:
-    #         - name: Checkout code
-    #           uses: actions/checkout@v2
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Download ZIP file from the previous job
+              uses: actions/download-artifact@v2
+              with:
+                name: find_trending_stocks_to_buy
+                path: ./terraform  # Specify the path to your Terraform folder
       
-    #         - name: Set up Terraform
-    #           uses: hashicorp/setup-terraform@v1
+            - name: List contents of downloaded ZIP file
+              run: ls -l ./terraform  # You can replace this with your desired actions
+            
+            - name: Set up Terraform
+              uses: hashicorp/setup-terraform@v1
         
-    #         - name: Initialize Terraform
-    #           run: terraform init
+            - name: Initialize Terraform
+              run: terraform init
       
-    #         - name: Apply Terraform Changes
-    #           run: terraform apply -auto-approve
+            - name: Plan Terraform Changes
+              run: terraform plan -out=tfplan
       
-    #         - name: Clean Up
-    #           run: terraform destroy -auto-approve
-    #           if: always()
-          
+            - name: Apply Terraform Changes
+              run: terraform apply -auto-approve tfplan
+            
+            - name: Clean Up
+              run: terraform destroy -auto-approve
+              if: always()
