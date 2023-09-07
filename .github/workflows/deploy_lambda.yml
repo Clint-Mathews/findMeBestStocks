@@ -26,9 +26,12 @@ jobs:
                 cp scripts/find_trending_stocks_to_buy.py build/
                 cd build
                 zip -r find_trending_stocks_to_buy.zip . -i requirements.txt find_trending_stocks_to_buy.py
-            
-            - name: Save ZIP file to repository folder
-              run: mv build/find_trending_stocks_to_buy.zip ./terraform/
+
+            - name: Upload ZIP file as an artifact
+              uses: actions/upload-artifact@v2
+              with:
+                name: find_trending_stocks_to_buy
+                path: build/find_trending_stocks_to_buy.zip
     
     deploy_lambda:
         needs: create_zip
