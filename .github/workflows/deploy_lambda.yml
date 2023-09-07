@@ -27,28 +27,8 @@ jobs:
                 cd build
                 zip -r find_trending_stocks_to_buy.zip . -i requirements.txt find_trending_stocks_to_buy.py
             
-            - name: Upload ZIP file as an artifact
-              uses: actions/upload-artifact@v2
-              with:
-                name: find_trending_stocks_to_buy
-                path: build/find_trending_stocks_to_buy.zip
-      
-    deploy:
-        runs-on: ubuntu-latest
-
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v2
-
-            - name: Download ZIP file from the previous job
-              uses: actions/download-artifact@v2
-              with:
-                name: find_trending_stocks_to_buy
-                path: ./terraform  # Specify the path to your Terraform folder
-
-            - name: List contents of downloaded ZIP file
-              run: ls -l ./terraform  # You can replace this with your desired actions
-    
+            - name: Save ZIP file to repository folder
+              run: mv build/find_trending_stocks_to_buy.zip ./terraform/
     
               # deploy_lambda:
     #     runs-on: ubuntu-latest
