@@ -56,16 +56,20 @@ jobs:
               uses: hashicorp/setup-terraform@v1
         
             - name: Initialize Terraform
+              working-directory: ./terraform
               run: terraform init
       
             - name: Set Terraform variables and plan
+              working-directory: ./terraform
               run: |
                 terraform apply -auto-approve -var="aws_access_key=${{ secrets.AWS_ACCESS_KEY }}" -var="aws_secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}"
                 terraform plan -out=tfplan
       
             - name: Apply Terraform Changes
+              working-directory: ./terraform
               run: terraform apply -auto-approve tfplan
             
             - name: Clean Up
+              working-directory: ./terraform
               run: terraform destroy -auto-approve
               if: always()
