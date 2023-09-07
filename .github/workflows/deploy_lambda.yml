@@ -56,8 +56,10 @@ jobs:
             - name: Initialize Terraform
               run: terraform init
       
-            - name: Plan Terraform Changes
-              run: terraform plan -out=tfplan
+            - name: Set Terraform variables and plan
+              run: |
+                terraform apply -auto-approve -var="aws_access_key=${{ secrets.AWS_ACCESS_KEY }}" -var="aws_secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+                terraform plan -out=tfplan
       
             - name: Apply Terraform Changes
               run: terraform apply -auto-approve tfplan

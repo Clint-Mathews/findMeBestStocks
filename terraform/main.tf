@@ -40,12 +40,6 @@ resource "aws_iam_role" "iam_for_lambda" {
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 
-data "archive_file" "lambda" {
-  type        = "zip"
-  source_file = "./lambda_source/find_trending_stocks_to_buy.py"
-  output_path = "find_trending_stocks_to_buy.zip"
-}
-
 resource "aws_lambda_function" "find_stock_lambda" {
   filename      = "find_trending_stocks_to_buy.zip"
   runtime       = "python3.8"
