@@ -48,7 +48,9 @@ jobs:
                 path: ./terraform  # Specify the path to your Terraform folder
       
             - name: List contents of downloaded ZIP file
-              run: ls -l ./terraform  # You can replace this with your desired actions
+              run: |
+                cd terraform
+                ls -l # You can replace this with your desired actions
             
             - name: Set up Terraform
               uses: hashicorp/setup-terraform@v1
