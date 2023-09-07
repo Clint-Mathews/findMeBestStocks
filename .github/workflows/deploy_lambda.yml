@@ -1,0 +1,72 @@
+name: Deploy Lambda Function
+
+on:
+    push:
+      branches:
+        - main
+
+jobs:
+    create_zips:
+        runs-on: ubuntu-latest
+    
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Set up Python
+              uses: actions/setup-python@v2
+              with:
+                python-version: 3.8
+
+            - name: Install dependencies and create ZIP file
+              run: |
+                pip install -r requirements.txt
+                mkdir -p build
+                cp requirements.txt build/
+                cp scripts/find_trending_stocks_to_buy.py build/
+                cd build
+                zip -r find_trending_stocks_to_buy.zip . -i requirements.txt find_trending_stocks_to_buy.py
+            
+            - name: Upload ZIP file as an artifact
+              uses: actions/upload-artifact@v2
+              with:
+                name: find_trending_stocks_to_buy
+                path: build/find_trending_stocks_to_buy.zip
+      
+    deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Download ZIP file from the previous job
+              uses: actions/download-artifact@v2
+              with:
+                name: find_trending_stocks_to_buy
+                path: ./terraform  # Specify the path to your Terraform folder
+
+            - name: List contents of downloaded ZIP file
+              run: ls -l ./terraform  # You can replace this with your desired actions
+    
+    
+              # deploy_lambda:
+    #     runs-on: ubuntu-latest
+    
+    #     steps:
+    #         - name: Checkout code
+    #           uses: actions/checkout@v2
+      
+    #         - name: Set up Terraform
+    #           uses: hashicorp/setup-terraform@v1
+        
+    #         - name: Initialize Terraform
+    #           run: terraform init
+      
+    #         - name: Apply Terraform Changes
+    #           run: terraform apply -auto-approve
+      
+    #         - name: Clean Up
+    #           run: terraform destroy -auto-approve
+    #           if: always()
+          

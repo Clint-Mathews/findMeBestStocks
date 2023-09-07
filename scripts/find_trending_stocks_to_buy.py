@@ -102,6 +102,20 @@ def fead_stock_recommendations_to_google_sheet(stock_recommendations: Dict[str, 
     print("Spreadsheet updated!")
     pprint.pprint(stock_recommendations)
 
-if __name__ == "__main__":
+def find_stocks_and_update():
     stock_recommendations = scrape_stock_recommendations()
     fead_stock_recommendations_to_google_sheet(stock_recommendations)
+
+
+def handler(event, context):
+    """
+    Lambda function handler.
+    :param event: Event data passed to the Lambda function (e.g., an event from an AWS trigger)
+    :param context: Information about the Lambda function execution environment
+    :return: A response message
+    """
+    find_stocks_and_update()
+    return {
+        "statusCode": 200,
+        "body": "Updated spreadsheet!"
+    }

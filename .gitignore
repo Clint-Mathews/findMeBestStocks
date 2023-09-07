@@ -1,1 +1,30 @@
 .env
+
+# Terraform
+.terraform/
+terraform.tfstate*
+*.tfstate
+*.tfstate.backup
+*.tfplan
+
+# Ignore any override files as they are usually used to override resources locally and do not need to be pushed to the remote repository
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Ignore CLI configuration files
+.terraformrc
+terraform.rc
+
+# Ignore sensitive files containing credentials or secret information
+*.secret
+*.secrets
+*.key
+*.pem
+
+# Ignore logs and diagnostic files
+*.log
+*.log.*
+
+*.zip
