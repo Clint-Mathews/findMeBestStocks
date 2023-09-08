@@ -1,7 +1,7 @@
 # findMeBestStocks
 "FindMeBestStocks" is a Python-based solution that employs web scraping to identify top-performing stocks.
 
-[![Deployment](https://github.com/Clint-Mathews/findMeBestStocks/actions/workflows/deploy_lambda.yml/badge.svg?branch=main)](https://github.com/Clint-Mathews/findMeBestStocks/actions/workflows/deploy_lambda.yml)
+[![Deployment status](https://github.com/Clint-Mathews/findMeBestStocks/actions/workflows/deploy_lambda.yml/badge.svg?branch=main)](https://github.com/Clint-Mathews/findMeBestStocks/actions/workflows/deploy_lambda.yml)
 
 ## Install dependencies
 ```
